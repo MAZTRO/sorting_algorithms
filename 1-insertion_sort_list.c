@@ -1,61 +1,68 @@
 #include "sort.h"
 
 /**
- * add_node - Add node to a list.
- * @node_int: Position to Add.
+ * swap_node_2 - Add node to a list.
+ * @my_node: The node to Add
+ * @list: To print.
+ * Return: Address of a Node.
+ */
+
+listint_t *swap_node_2(listint_t *my_node, listint_t *list)
+{
+	my_node->next->prev = NULL;
+	my_node->prev = my_node->next;
+	my_node->next = NULL;
+	my_node->prev->next = my_node;
+	list = my_node->prev;
+	print_list(list);
+	return (list);
+}
+
+/**
+ * swap_node_init - Add node to a list.
  * @my_node: The node to Add
  * Return: Address of a Node.
  */
 
-listint_t *add_node(listint_t *node_int, listint_t *my_node)
+void swap_node_init(listint_t *my_node)
 {
-	if (node_int->n < my_node->n && node_int->prev != NULL)
-	{
-		my_node->prev = node_int;
-		my_node->next = node_int->next;
-		node_int->next = my_node;
-		my_node->next->prev = my_node;
-	}
-	else if (node_int->n < my_node->n && node_int->prev == NULL)
-	{
-		my_node->prev = node_int;
-		my_node->next = node_int->next;
-		node_int->next = my_node;
-		my_node->next->prev = my_node;
-	}
-	else
-	{
-		my_node->prev = NULL;
-		my_node->next = node_int;
-		node_int->prev = my_node;
-	}
-	return (my_node);
+	my_node->next->prev = NULL;
+	my_node->next->next->prev = my_node;
+	my_node->prev = my_node->next;
+	my_node->next = my_node->next->next;
+	my_node->prev->next = my_node;
 }
 
 /**
- * pop_node - remove a node from a list.
- * @node_int: Node to remove.
+ * swap_node_med - Add node to a list.
+ * @my_node: The node to Add
  * Return: Address of a Node.
  */
 
-listint_t *pop_node(listint_t *node_int)
+void swap_node_med(listint_t *my_node)
 {
-	if (node_int->next != NULL)
-	{
-		node_int->prev->next = node_int->next;
-		node_int->next->prev = node_int->prev;
-		node_int->prev = NULL;
-		node_int->next = NULL;
-	}
-	else
-	{
-		node_int->prev->next = NULL;
-		node_int->prev = NULL;
-		node_int->next = NULL;
-	}
-	return (node_int);
+	my_node->next->next->prev = my_node;
+	my_node->next->prev = my_node->prev;
+	my_node->prev = my_node->next;
+	my_node->next = my_node->next->next;
+	my_node->prev->prev->next = my_node->prev;
+	my_node->prev->next = my_node;
 }
 
+/**
+ * swap_node_fin - Add node to a list.
+ * @my_node: The node to Add
+ * Return: Address of a Node.
+ */
+
+void swap_node_fin(listint_t *my_node)
+{
+	my_node->next->prev = my_node->prev;
+	my_node->prev = my_node->next;
+	my_node->next = NULL;
+	my_node->prev->prev->next = my_node->prev;
+	my_node->prev->next = my_node;
+}
 /**
  * insertion_sort_list - Sort a Doubly linked list.
  * @list: A Doubly linked list.
@@ -64,37 +71,44 @@ listint_t *pop_node(listint_t *node_int)
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *h, *flying_node, *tmp;
+	listint_t *h, *tmp;
 
 	if ((list != NULL) && (*list != NULL))
 	{
 		h = *list;
-		while (h->next)
+		h = h->next;
+		tmp = h;
+		while (h != NULL)
 		{
-			if (h->n > h->next->n)
+			while (tmp != NULL)
 			{
-				flying_node = pop_node(h->next);
-				tmp = h;
-				while (tmp != NULL)
+				if ((tmp->n > h->n) && tmp->prev == NULL && h->next == NULL)
 				{
-					if (flying_node->n > tmp->n)
-					{
-						h = add_node(tmp, flying_node);
-						print_list(*list);
-						break;
-					}
-					else if ((flying_node->n < tmp->n) && tmp->prev == NULL)
-					{
-						*list = add_node(tmp, flying_node);
-						print_list(*list);
-						break;
-					}
-					tmp = tmp->prev;
+					*list = swap_node_2(tmp, *list);
+					h = tmp;
 				}
-				h = h->prev;
+				if ((tmp->n > h->n) && tmp->prev == NULL)
+				{
+					swap_node_init(tmp);
+					*list = tmp->prev;
+					h = tmp;
+					print_list(*list);
+				}
+				if ((tmp->n > h->n) && tmp->prev != NULL)
+				{
+					if ((tmp->n > h->n) && h->next == NULL)
+					{
+						swap_node_fin(tmp), print_list(*list);
+					}
+					else
+					{
+						swap_node_med(tmp), print_list(*list);
+					}
+				}
+				tmp = tmp->prev;
 			}
-			/* printf("H: %d\n", h->n); */
 			h = h->next;
+			tmp = h;
 		}
 	}
 }
