@@ -27,20 +27,23 @@ void selection_sort(int *array, size_t size)
 {
 	size_t count = 0, len = 0, cM = 0;
 
-	while (len < size - 1)
+	if ((array != NULL) && (size > 1))
 	{
-		count = len + 1;
-		cM = len;
-		while (count < size)
+		while (len < size - 1)
 		{
-			if (array[count] < array[cM])
+			count = len + 1;
+			cM = len;
+			while (count < size)
 			{
-				cM = count;
+				if (array[count] < array[cM])
+				{
+					cM = count;
+				}
+				count++;
 			}
-			count++;
+			swap_number(&array[cM], &array[len]);
+			print_array(array, size);
+			len++;
 		}
-		swap_number(&array[cM], &array[len]);
-		print_array(array, size);
-		len++;
 	}
 }
