@@ -41,8 +41,11 @@ void selection_sort(int *array, size_t size)
 				}
 				count++;
 			}
-			swap_number(&array[len], &array[cM]);
-			print_array(array, size);
+			if (cM != len)
+			{
+				swap_number(&array[cM], &array[len]);
+				print_array(array, size);
+			}
 			len++;
 		}
 	}
