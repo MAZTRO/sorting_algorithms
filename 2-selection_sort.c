@@ -23,7 +23,7 @@ void swap_number(int *num_a, int *num_b)
  * Return: Always 0.
  */
 
- void selection_sort(int *array, size_t size)
+void selection_sort(int *array, size_t size)
 {
 	size_t count = 0, len = 0, cM = 0;
 
