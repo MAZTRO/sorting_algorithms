@@ -27,7 +27,7 @@ void selection_sort(int *array, size_t size)
 {
 	size_t count = 0, len = 0, cM = 0;
 
-	if ((array != NULL) && (size > 1))
+	if (size > 1)
 	{
 		while (len < size - 1)
 		{
@@ -41,7 +41,7 @@ void selection_sort(int *array, size_t size)
 				}
 				count++;
 			}
-			swap_number(&array[cM], &array[len]);
+			swap_number(&array[len], &array[cM]);
 			print_array(array, size);
 			len++;
 		}
