@@ -1,7 +1,7 @@
 #include "sort.h"
 
 /**
- * swap_number - Change the order of position
+ * swap_number - Change the order of positions
  * @num_a: First number
  * @num_b: Second Number
  * Return: Always 0
