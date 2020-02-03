@@ -97,13 +97,9 @@ void insertion_sort_list(listint_t **list)
 				if ((tmp->n > h->n) && tmp->prev != NULL)
 				{
 					if ((tmp->n > h->n) && h->next == NULL)
-					{
-						swap_node_fin(tmp), print_list(*list);
-					}
+					{swap_node_fin(tmp), print_list(*list); }
 					else
-					{
-						swap_node_med(tmp), print_list(*list);
-					}
+					{swap_node_med(tmp), print_list(*list); }
 				}
 				tmp = tmp->prev;
 			}
