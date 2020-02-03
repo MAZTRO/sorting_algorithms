@@ -4,16 +4,22 @@
  * swap_number - Change the order of positions
  * @num_a: First number
  * @num_b: Second Number
+ * @array: Group of data
+ * @size: of array
  * Return: Always 0
  */
 
-void swap_number(int *num_a, int *num_b)
+void swap_number(int *num_a, int *num_b, int *array, size_t size)
 {
 	int tmp = 0;
 
 	tmp = *num_a;
 	*num_a = *num_b;
 	*num_b = tmp;
+	if (tmp != *num_a)
+	{
+		print_array(array, size);
+	}
 }
 
 /**
@@ -36,19 +42,11 @@ size_t partition(int *array, size_t low, size_t high, size_t size)
 		if (array[idx] < pV)
 		{
 			i_low++;
-			swap_number(&array[i_low], &array[idx]);
-			if (i_low != (int)idx)
-			{
-				print_array(array, size);
-			}
+			swap_number(&array[i_low], &array[idx], array, size);
 		}
 	}
 	i_low++;
-	swap_number(&array[i_low], &array[high]);
-	if (i_low != (int)high)
-	{
-		print_array(array, size);
-	}
+	swap_number(&array[i_low], &array[high], array, size);
 	return (i_low);
 }
 
